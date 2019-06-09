@@ -3,10 +3,10 @@
 	function fenye($pageStart, $pageSize, $brige) {
 		require '../init.php';
 		if ($brige == 'check') {
-			$selSql = "select * from subwork order by date asc limit ".$pageStart*$pageSize.", ".$pageSize;
+			$selSql = "select * from subwork order by date desc limit ".$pageStart*$pageSize.", ".$pageSize;
 		}
 		else { 
-			$selSql = "select * from filemation order by date asc limit ".$pageStart*$pageSize.", ".$pageSize;
+			$selSql = "select * from filemation order by date desc limit ".$pageStart*$pageSize.", ".$pageSize;
 		}
 		$result = mysqli_query($link, $selSql);
 		$sublimdata = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -17,10 +17,10 @@
 	function allNums($brige) {
 		require '../init.php';
 		if ($brige == 'check') {
-			$selSql = "select * from subwork order by date asc";
+			$selSql = "select * from subwork order by date desc";
 		}
 		else { 
-			$selSql = "select * from filemation order by date asc";
+			$selSql = "select * from filemation order by date desc";
 		}
 		$result = mysqli_query($link, $selSql);
 		$subdata = mysqli_fetch_all($result, MYSQLI_ASSOC);
