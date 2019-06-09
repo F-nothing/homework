@@ -1,0 +1,46 @@
+body, html { width: 100%; height: 100%; }
+body { background: #ededed center/100% no-repeat; }
+a:hover { text-decoration: none; }
+button { border: 0; background-color: transparent; }
+input { border-color: rgba(255,255,255); border-radius: 3px; background-color: transparent; }
+.in-content { width: 100%; font-weight: bold; }
+select { width: 60%; height: 25px; background-color: transparent; border: 2px solid lightgray; border-radius: 3px;}
+hr { border-color: lightgray; }
+.page-header { margin-top: 0px; border-color: lightgray; }
+.panel-default { cursor: pointer; }
+.panel-heading { text-align: center; }
+.container {
+	width: 80%;
+	height: 100%;
+	background-color: rgba(255,255,255,0.66);
+	border: 30px solid rgba(255,255,255,0.00);
+}
+.right {
+	text-align: right;
+}
+.test {
+	width: 500px;
+	height: 200px;
+	border: 1px solid red;
+	background-image: url("images/bj.jpg");
+	background-size: 100%;
+}
+
+.upload_times { width: 1em; }
+
+.content-tab { width: 95%; border-radius: 5px; box-shadow:-10px 10px 5px #888888; margin: 0 auto; }
+.time-s { background-color: transparent; }
+.table { width: 100%; }
+.panel-th { width: 70px; text-align: center;}
+#checkwork { display: none; }
+.pagecenter { width: 243px; margin: 0 auto; }
+
+#loadwork { display: none; }
+#release { display: block; }
+.glyphicon-heart { color: red; }
+#release th { text-align: center; }
+#release td { font-weight: bold; }
+.release_times { width: 1em; }
+.progessc { text-align: center; }
+.navbar-fixed-bottom { min-height: 0px; height: 25px; }
+#clock { display: inline-block;  }

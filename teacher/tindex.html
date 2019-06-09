@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>学生作业管理系统—教师</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/tindex.css">
+	<link rel="stylesheet" type="text/css" href="../link/css/bootstrap-select.min.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="js/tindex.js"></script>
+	<script src="../link/js/bootstrap-select.min.js"></script>
+
+</head>
+<body style="background-image: url(images/bj.jpg);">
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="page-header">
+					<h1>
+						欢迎进入学生作业管理系统
+					</h1>
+					<h1 class="right">
+						<small>Welcome to Student Homework Management System</small>
+					</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row clearfix">
+				<div class="col-md-2 column panel-choose">
+					<div class="panel-group" >
+						<div class="panel panel-default" onclick="ChangePage('release')">
+							<div class="panel-heading">
+								 <a class="panel-title collapsed" data-toggle="collapse" >查看发布</a>
+							</div>
+						</div>
+						<div class="panel panel-default" onclick="ChangePage('checkload')">
+							<div class="panel-heading">
+								 <a class="panel-title collapsed" data-toggle="collapse" >查看下载</a>
+							</div>
+						</div>
+						<div class="panel panel-default" onclick="ChangePage('upload')">
+							<div class="panel-heading">
+								 <a class="panel-title collapsed" data-toggle="collapse" >上传课件</a>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<?php session_start(); ?>
+								<? $_SESSION['logout'] = 1; ?>
+								<? $_SESSION['url'] = "index.php"; ?>
+								 <a href="../option.php" class="panel-title collapsed"  >退出登录</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-10 column page-header">
+					<!-- 查看发布 -->
+					<form method="post" action="tindex.php" enctype="multipart/form-data">
+						<div id="release">
+							<div id="release-table" class="content-tab">
+								<table class="table">
+									<thead>
+										<tr>
+											<th class="panel-th">
+												课程名
+											</th>
+											<td>
+												<input type="text" name="object" class="release_object">
+											</td>
+											<th class="panel-th">
+												教师名
+											</th>
+											<td>
+												<input type="text" name="name" readonly="" value="<? echo @$_COOKIE['name']; ?>" class="release_name">
+											</td>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th rowspan="3" class="panel-th">
+												内容
+											</th>
+											<td colspan="3" rowspan="3">
+												<input type="text" name="content" class="release_content">
+											</td>
+											<th><button name="release_sub">发布</button></th>
+										</tr>
+										
+										<tr >
+											
+										</tr>
+										<tr >
+											
+										</tr>
+										<tr class="time-s">
+											<th class="panel-th">
+												时间
+											</th>
+											<td>
+												<span id="date" name="date" v-text="date"></span>
+											</td>
+											<th class="panel-th">
+												次数
+											</th>
+											<td>
+												第 <input type="text" name="times" class="release_times"> 次
+											</td>
+											<th><button >取消</button></th>
+										</tr>
+									</tbody>
+								</table>
+							</div> <hr>
+							<div class="row clearfix release_history">
+								<?php foreach(@$_SESSION['subdata'] as $v): ?>
+									<div class="col-md-4">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>课程名</th>
+													<th colspan="3"><input type="text" name="his-obj" readonly="" value="<?=htmlspecialchars($v['object']) ?>"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<th>内容</th>
+													<th colspan="3"><textarea rows="3" readonly="" name="his-cont"><?=htmlspecialchars($v['content']) ?></textarea></th>
+												</tr>
+												<tr>
+													<th>日期</th>
+													<th colspan="3"><input type="text" name="" readonly="" value="<?=htmlspecialchars($v['date']) ?>"></th>
+												</tr>
+												<tr>
+													<th colspan="4"><button name="his-upd">修改</button> <button name="his-del">删除</button></th>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								<?php endforeach; ?>
+
+								<div class="col-md-12 column">
+									<div class="pagecenter">
+										<ul class="pagination pagination-sm">
+											<li>
+												<a href="?pageNum=0">首页</a>
+											</li>
+											<li>
+												<a href="?pageNum=<?php echo $pageStart==0?0:($pageStart-1)?>"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+											</li>
+											<!-- <li>
+												<a href="?pageNum=0">1</a>
+											</li>
+											<li>
+												<a href="?pageNum=1">2</a>
+											</li>
+											<li>
+												<a href="?pageNum=2">3</a>
+											</li> -->
+											<li>
+												<a href="?pageNum=<?php echo $_SESSION['pageStart']==$_SESSION['endPage']?$_SESSION['endPage']:($_SESSION['pageStart']+1)?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+											</li>
+											<li>
+												 <a href="?pageNum=<?php echo $_SESSION['endPage']?>">尾页</a>
+											</li>
+										</ul>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						<!-- 查看下载 -->
+						<div class="content-tab content-tab-check" id="checkload">
+							<table class="table" >
+								<thead>
+									<tr>
+										<th>
+											<select class="selectpicker major selchoose" data-style="btn-default" data-live-search="true" name="selemajor">
+												<option value="../upload/student/software/class" >17软件工程专业</option>
+												<option value="../upload/student/xx/class">XX专业</option>
+											</select>
+										</th>
+										<th>
+											<select class="selectpicker class selchoose" data-style="btn-default" data-live-search="true" name="seleclass">
+												<option value="1" >1班</option>
+												<option value="2" >2班</option>
+											</select>
+										</th>
+										<th>
+											<select class="selectpicker times selchoose" data-style="btn-default" data-live-search="true" name="seletimes">
+												<option value="/first" >第一次</option>
+												<option value="/second" >第二次</option>
+												<option value="/third" >第三次</option>
+												<option value="/fourth" >第四次</option>
+												<option value="/fifth" >第五次</option>
+												<option value="/sixth" >第六次</option>
+			    							</select>
+										</th>
+										<th >
+											<button name="checkload">检索</button>
+										</th>
+
+									</tr>
+									<tr>
+										<th>
+											总人数
+										</th>
+										<th>
+											已交
+										</th>
+										<th>
+											未交
+										</th>
+										<th>
+											操作
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr >
+										<th>
+											<span id="allpep">0</span>
+										</th>
+										<th>
+											<span id="subyet">0</span>
+										</th>
+										<th>
+											<span id="subnot">0</span>
+										</th>
+										<th >
+											<button name="zip">压缩</button>|<a href="download.zip" > 下载</a>
+										</th>
+									</tr>
+									<tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- 上传课件 -->
+						<div class="content-tab" id="upload">
+							<table class="table">
+								<thead>
+									<tr>
+										<th class="panel-upload">
+											课程名
+										</th>
+										<td>
+											<input type="text" name="object">
+										</td>
+										<th>
+											教师名
+										</th>
+										<td>
+											<input type="text" name="name" readonly="" value="<? echo @$_COOKIE['name']; ?>" class="release_name">
+										</td>
+										<th>
+											操作
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="upload-row2">
+										<th class="panel-upload upload-row2">
+											选择课件
+										</th>
+										<td>
+											<label for="file" class=" btn btn-default">点击上传</label>
+											<input id="file" type="file" name="file" style="display:none">
+
+										</td>
+										<th>
+											备注
+										</th>
+										<td>
+											<input placeholder="请备注课件名称" type="text" name="note">
+										</td>
+										<th>
+											<button name="upload_sub">上传</button>
+										</th>
+									</tr>
+									<tr class="time-s">
+										<th class="panel-upload">
+											时间
+										</th>
+										<td>
+											<span id="date" name="date" v-text="date"></span>
+										</td>
+										<th>
+											次数
+										</th>
+										<td>
+											第 <input type="text" name="times" class="upload_times"> 次
+										</td>
+										<th>
+											<button>取消</button>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+						<div>
+							<span>&nbsp;&nbsp;&nbsp;欢迎 <?php if(isset($_COOKIE['userid'])) {echo $_COOKIE['name'];} ?> 老师回来</span>
+							<span class="navbar-right" id="clock">
+								北京时间：<span class="date" v-text="date"></span> <span class="time" v-text="time"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</span>
+						</div>
+					</nav>
+				</div>
+			</div>
+	</div>
+	<script type="text/javascript">
+		var date = new Vue({
+			el: '#date',
+			data: {
+				date:''
+			}
+		});
+		var up_date = new Vue({
+			el: '#upload',
+			data: {
+				date:''
+			}
+		});
+		var clock = new Vue({
+		    el: '#clock',
+		    data: {
+		        time: '',
+		        date: ''
+		    }
+		});
+
+		var week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+		var timerID = setInterval(updateTime, 1000);
+		updateTime();
+		function updateTime() {
+		    var cd = new Date();
+		    clock.time = zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(), 2) + ':' + zeroPadding(cd.getSeconds(), 2);
+		    clock.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth()+1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
+		    date.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth()+1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
+		    up_date.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth()+1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
+		};
+
+		function zeroPadding(num, digit) {
+		    var zero = '';
+		    for(var i = 0; i < digit; i++) {
+		        zero += '0';
+		    }
+		    return (zero + num).slice(-digit);
+		}
+	</script>
+</body>
+</html>

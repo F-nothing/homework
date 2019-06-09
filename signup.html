@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache"> 
+<meta http-equiv="Expires" content="0"> 
+<title>学生作业管理系统—注册</title>
+<link rel="stylesheet" type="text/css" href="link/css/signup.css" />
+<link rel="stylesheet" type="text/css" href="link/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="link/css/build.css">
+</head>
+
+<body>
+	<div class="login_box">
+	    <div class="login_l_img"><img src="images/login-img.png" /></div>
+	    <div class="login">
+	    	<div class="login_name">
+	            <p>学生作业管理系统</p>
+	        </div>
+	        <form method="post" action="signup.php">
+	            <input name="username" type="text" placeholder="用户名（字母、数字，6~12位）">
+	            <div class="warning" id="checktl">请注意账号格式</div>
+				<input name="password" type="password" id="password" placeholder="密码（字母、数字，6~12位）" />
+				<div class="warning" id="checkerror">账号或密码错误</div>
+				<input name="repassword" type="password" id="repassword" placeholder="确认密码" />
+				<div class="warning" id="checksame">两次密码不一致</div>
+				<input name="verify_code" type="text" id="verify_code" placeholder="请输入验证码"><?php session_start(); ?>
+				<img class="verify_code" src="verify/verify_tool_code.php" onclick="this.src='verify/verify_tool_code.php'" >
+				<div class="warning" id="checkverify">验证码错误</div>
+				<div class="radio radio-info radio-inline">
+					<input type="radio" id="inlineRadio1" value="teacher" name="profess" checked>
+					<label for="inlineRadio1"> 我是老师 </label>
+				</div>
+				<div class="radio radio-info radio-inline">
+					<input type="radio" id="inlineRadio2" value="student" name="profess">
+					<label for="inlineRadio2"> 我是学生 </label>
+				</div>
+	            <input value="立即注册" style="width:100%;" type="submit" name="signup">
+	        </form>
+	        <div class="choose">
+	        	<span class="text-muted text-left" >忘记密码</span> <span class="text-muted text-right" onclick="window.location.href='index.html'">返回登录</span>
+	        </div>
+	    </div>
+    <div class="copyright">QDGXY 版权所有©2019-2021 技术支持电话：000-00000000</div>
+</div>
+
+</body>
+</html>

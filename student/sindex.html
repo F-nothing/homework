@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>学生作业管理系统—学生</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/sindex.css">
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="js/sindex.js"></script>
+</head>
+<body style="background-image: url(images/bj.jpg);">
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="page-header">
+					<h1>
+						欢迎进入学生作业管理系统
+					</h1>
+					<h1 class="right">
+						<small>Welcome to Student Homework Management System</small>
+					</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row clearfix">
+			<div class="col-md-2 column panel-choose">
+				<div class="panel-group" >
+					<div class="panel panel-default" onclick="ChangePage('checkwork')">
+						<div class="panel-heading">
+							 <a class="panel-title collapsed" data-toggle="collapse" >查看作业</a>
+						</div>
+					</div>
+					<div class="panel panel-default" onclick="ChangePage('loadwork')">
+						<div class="panel-heading">
+							 <a class="panel-title collapsed" data-toggle="collapse" >课件下载</a>
+						</div>
+					</div>
+					<div class="panel panel-default" onclick="ChangePage('release')">
+						<div class="panel-heading">
+							 <a class="panel-title collapsed" data-toggle="collapse" >提交作业</a>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<?php session_start(); ?>
+							<? $_SESSION['logout'] = 1; ?>
+							<? $_SESSION['url'] = "index.php"; ?>
+							 <a href="../option.php" class="panel-title collapsed"  >退出登录</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-md-10 column page-header">
+				<form method="post" action="sindex.php" enctype="multipart/form-data">
+					<!-- 查看作业 -->
+					<div class="row clearfix" id="checkwork">
+						<?php foreach(@$_SESSION['subdata'] as $v): ?>
+							<div class="content-tab">
+								<table class="table">
+									<thead>
+										<tr>
+											<th class="panel-th">
+												课程名
+											</th>
+											<th>
+												<input type="text" name="" value="<?=htmlspecialchars($v['object']) ?>" readonly="">
+											</th>
+											<th class="panel-th">
+												教师名
+											</th>
+											<th>
+												<input type="text" name="" readonly="" value="<?=htmlspecialchars($v['name']) ?>">
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr >
+											<th class="panel-th">
+												内容
+											</th>
+											<td colspan="3" >
+												<input type="text" class="in-content" name="" readonly="" value="<?=htmlspecialchars($v['content']) ?>">
+											</td>
+											
+										</tr>
+										<tr class="time-s">
+											<th class="panel-th">
+												时间
+											</th>
+											<th>
+												<input type="text" name="" value="<?=htmlspecialchars($v['date']) ?>" readonly="">
+											</th>
+											<th class="panel-th">
+												次数
+											</th>
+											<th>
+												第 <input type="text" name="times" readonly="" class="release_times" value="<?=htmlspecialchars($v['times']) ?>"> 次
+											</th>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						<?php endforeach; ?>
+						<div class="col-md-12 column">
+							<div class="pagecenter">
+								<ul class="pagination pagination-sm">
+									<li>
+										<a href="?pageNum=0">首页</a>
+									</li>
+									<li>
+										<a href="?pageNum=<?php echo $pageStart==0?0:($pageStart-1)?>"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+									</li>
+									<!-- <li>
+										<a href="?pageNum=0">1</a>
+									</li>
+									<li>
+										<a href="?pageNum=1">2</a>
+									</li>
+									<li>
+										<a href="?pageNum=2">3</a>
+									</li> -->
+									<li>
+										<a href="?pageNum=<?php echo $_SESSION['pageStart']==$_SESSION['endPage']?$_SESSION['endPage']:($_SESSION['pageStart']+1)?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+									</li>
+									<li>
+										 <a href="?pageNum=<?php echo $_SESSION['endPage']?>">尾页</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- 课件下载 -->
+					<div class="row clearfix" id="loadwork">
+						<?php foreach(@$_SESSION['fsubdata'] as $v): ?>
+							<div class="content-tab">
+								<table class="table" >
+									<thead>
+										<tr>
+											<th>
+												课程名
+											</th>
+											<th>
+												教师名
+											</th>
+											<th>
+												课件名
+											</th>
+											<th>
+												操作
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr >
+											<th>
+												<input type="text" readonly="" value="<?=htmlspecialchars($v['object']) ?>">
+											</th>
+											<th>
+												<input type="text" readonly="" value="<?=htmlspecialchars($v['name']) ?>">
+											</th>
+											<th>
+												<input type="text" readonly="" value="<?=htmlspecialchars($v['filename']) ?> -- <?=htmlspecialchars($v['note']) ?>">
+											</th>
+											<th>
+												<button name="zip" value="<?=htmlspecialchars($v['filetmpname']) ?>">压缩</button>|<a href="#" > 下载</a>
+											</th>
+										</tr>
+										<tr>
+											<th></th>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						<?php endforeach; ?>
+						<div class="col-md-12 column">
+							<div class="pagecenter">
+								<ul class="pagination pagination-sm">
+									<li>
+										<a href="?fpageNum=0">首页</a>
+									</li>
+									<li>
+										<a href="?fpageNum=<?php echo $fpageStart==0?0:($fpageStart-1)?>"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+									</li>
+									<!-- <li>
+										<a href="?pageNum=0">1</a>
+									</li>
+									<li>
+										<a href="?pageNum=1">2</a>
+									</li>
+									<li>
+										<a href="?pageNum=2">3</a>
+									</li> -->
+									<li>
+										<a href="?fpageNum=<?php echo $_SESSION['fpageStart']==$_SESSION['fendPage']?$_SESSION['fendPage']:($_SESSION['fpageStart']+1)?>"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+									</li>
+									<li>
+										 <a href="?fpageNum=<?php echo $_SESSION['fendPage']?>">尾页</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- 提交作业 -->
+					<div  id="release">
+						<div id="release-table" class="content-tab">
+							<table class="table">
+								<thead>
+									<tr>
+										<th colspan="2" class="professc">
+											<select  name="selemajor">
+												<option value="../upload/student/software/class" >17软件工程专业</option>
+												<option value="../upload/student/xx/class">XX专业</option>
+											</select>
+										</th>
+										<th>
+											<select class="" name="seleclass">
+												<option value="1" >1班</option>
+												<option value="2" >2班</option>
+											</select>
+										</th>
+										<th>
+											<select class="" name="seletimes">
+												<option value="/first" >第一次</option>
+												<option value="/second" >第二次</option>
+												<option value="/third" >第三次</option>
+												<option value="/fourth" >第四次</option>
+												<option value="/fifth" >第五次</option>
+												<option value="/sixth" >第六次</option>
+			    							</select>
+										</th>
+										<th >
+											<span>：）</span>
+										</th>
+
+									</tr>
+									<tr>
+										<th class="panel-upload">
+											课程名
+										</th>
+										<td>
+											<input type="text" name="object">
+										</td>
+										<th>
+											学生姓名
+										</th>
+										<td>
+											<input type="text" name="name" readonly="" value="<? echo @$_COOKIE['name']; ?>" class="release_name">
+										</td>
+										<th>
+											操作
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="upload-row2">
+										<th class="panel-upload upload-row2">
+											选择课件
+										</th>
+										<td>
+											<label for="file" class=" btn btn-default">点击上传</label>
+											<input id="file" type="file" name="file" style="display:none">
+										</td>
+										<th>
+											备注
+										</th>
+										<td>
+											<input type="text" name="note">
+										</td>
+										<th>
+											<button name="upload_sub">上传</button>
+										</th>
+									</tr>
+									<tr class="time-s">
+										<th class="panel-upload">
+											时间
+										</th>
+										<td>
+											<span id="date" name="date" v-text="date"></span>
+										</td>
+										<th>
+											次数
+										</th>
+										<td>
+											第 <input type="text" name="times" class="upload_times"> 次
+										</td>
+										<th>
+											<button type="reset">取消</button>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+					<div>
+						<span>&nbsp;&nbsp;&nbsp;欢迎 <?php if(isset($_COOKIE['userid'])) {echo $_COOKIE['name'];} ?> 同学回来</span>
+						<span class="navbar-right" id="clock">
+							北京时间：<span class="date">{{ date }}</span> <span class="time">{{ time }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						</span>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var date = new Vue({
+			el: '#date',
+			data: {
+				date:''
+			}
+		});
+		var clock = new Vue({
+		    el: '#clock',
+		    data: {
+		        time: '',
+		        date: ''
+		    }
+		});
+
+		var week = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+		var timerID = setInterval(updateTime, 1000);
+		updateTime();
+		function updateTime() {
+		    var cd = new Date();
+		    clock.time = zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(), 2) + ':' + zeroPadding(cd.getSeconds(), 2);
+		    date.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth()+1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
+		    clock.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth()+1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
+		};
+
+		function zeroPadding(num, digit) {
+		    var zero = '';
+		    for(var i = 0; i < digit; i++) {
+		        zero += '0';
+		    }
+		    return (zero + num).slice(-digit);
+		}
+
+	</script>
+</body>
+</html>
