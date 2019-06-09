@@ -2,7 +2,7 @@
 	// 分页函数
 	function fenye($pageStart, $pageSize) {
 		require '../init.php';
-		$selSql = "select * from subwork where name = '".$_COOKIE['name']."' order by date asc limit ".$pageStart*$pageSize.", ".$pageSize;
+		$selSql = "select * from subwork where name = '".$_COOKIE['name']."' order by date desc limit ".$pageStart*$pageSize.", ".$pageSize;
 		$result = mysqli_query($link, $selSql);
 		$sublimdata = mysqli_fetch_all($result, MYSQLI_ASSOC);
 		return $sublimdata;
@@ -11,7 +11,7 @@
 	// 获取总页数
 	function allNums() {
 		require '../init.php';
-		$selSql = "select * from subwork where name = '".$_COOKIE['name']."' order by date asc";
+		$selSql = "select * from subwork where name = '".$_COOKIE['name']."' order by date desc";
 		$result = mysqli_query($link, $selSql);
 		$subdata = mysqli_fetch_all($result, MYSQLI_ASSOC);
 		return count($subdata);
