@@ -1,5 +1,0 @@
-
-*.js linguist-language=js
-*.css linguist-language=css
-*.html linguist-language=html
-*.php linguist-language=php
